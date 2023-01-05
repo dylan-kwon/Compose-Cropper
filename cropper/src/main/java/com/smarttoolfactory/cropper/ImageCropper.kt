@@ -118,7 +118,7 @@ fun ImageCropper(
             }
         }
 
-        val pressedStateColor = remember(cropStyle.backgroundColor){
+        val pressedStateColor = remember(cropStyle.backgroundColor) {
             cropStyle.backgroundColor
                 .copy(cropStyle.backgroundColor.alpha * .7f)
         }
@@ -128,7 +128,14 @@ fun ImageCropper(
             targetValue = if (isHandleTouched) pressedStateColor else cropStyle.backgroundColor
         )
 
+        val imageCropperBackground = remember(cropStyle.backgroundColor) {
+            cropStyle.imageCropperBackgroundColor
+        }
+
         // Crops image when user invokes crop operation
+        with(cropState) {
+            drawAreaRect = updateImageDrawRectFromTransformation()
+        }
         Crop(
             crop,
             scaledImageBitmap,
@@ -170,7 +177,8 @@ fun ImageCropper(
             cropType = cropType,
             cropOutline = cropOutline,
             cropStyle = cropStyle,
-            transparentColor = transparentColor
+            transparentColor = transparentColor,
+            imageCropperBackground = imageCropperBackground
         )
     }
 }
@@ -191,11 +199,12 @@ private fun ImageCropper(
     cropStyle: CropStyle,
     overlayRect: Rect,
     transparentColor: Color,
+    imageCropperBackground: Color,
 ) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(imageCropperBackground)
     ) {
 
         AnimatedVisibility(
@@ -271,7 +280,7 @@ private fun ImageCropperImpl(
         val handleColor = cropStyle.handleColor
         val drawHandles = cropType == CropType.Dynamic
         val strokeWidth = cropStyle.strokeWidth
-        
+
         DrawingOverlay(
             modifier = Modifier.size(containerWidth, containerHeight),
             drawOverlay = drawOverlay,

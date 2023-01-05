@@ -15,6 +15,7 @@ import com.smarttoolfactory.cropper.model.aspectRatios
 import com.smarttoolfactory.cropper.state.CropState
 import com.smarttoolfactory.cropper.ui.theme.DefaultBackgroundColor
 import com.smarttoolfactory.cropper.ui.theme.DefaultHandleColor
+import com.smarttoolfactory.cropper.ui.theme.DefaultImageCropperBackgroundColor
 import com.smarttoolfactory.cropper.ui.theme.DefaultOverlayColor
 
 /**
@@ -32,11 +33,11 @@ object CropDefaults {
         contentScale: ContentScale = ContentScale.Fit,
         cropOutlineProperty: CropOutlineProperty,
         aspectRatio: AspectRatio = aspectRatios[2].aspectRatio,
-        overlayRatio:Float = .9f,
+        overlayRatio: Float = .9f,
         pannable: Boolean = true,
         fling: Boolean = false,
         zoomable: Boolean = true,
-        rotatable: Boolean = false
+        rotatable: Boolean = false,
     ): CropProperties {
         return CropProperties(
             cropType = cropType,
@@ -63,7 +64,8 @@ object CropDefaults {
         strokeWidth: Dp = 1.dp,
         overlayColor: Color = DefaultOverlayColor,
         handleColor: Color = DefaultHandleColor,
-        backgroundColor: Color = DefaultBackgroundColor
+        backgroundColor: Color = DefaultBackgroundColor,
+        imageCropperBackgroundColor: Color = DefaultImageCropperBackgroundColor,
     ): CropStyle {
         return CropStyle(
             drawOverlay = drawOverlay,
@@ -71,7 +73,8 @@ object CropDefaults {
             strokeWidth = strokeWidth,
             overlayColor = overlayColor,
             handleColor = handleColor,
-            backgroundColor = backgroundColor
+            backgroundColor = backgroundColor,
+            imageCropperBackgroundColor = imageCropperBackgroundColor
         )
     }
 }
@@ -108,7 +111,8 @@ data class CropStyle internal constructor(
     val overlayColor: Color,
     val handleColor: Color,
     val backgroundColor: Color,
-    val cropTheme: CropTheme = CropTheme.Dark
+    val imageCropperBackgroundColor: Color,
+    val cropTheme: CropTheme = CropTheme.Dark,
 )
 
 /**
@@ -117,13 +121,13 @@ data class CropStyle internal constructor(
 @Immutable
 data class CropOutlineProperty(
     val outlineType: OutlineType,
-    val cropOutline: CropOutline
+    val cropOutline: CropOutline,
 )
 
 /**
  * Light, Dark or system controlled theme
  */
-enum class CropTheme{
+enum class CropTheme {
     Light,
     Dark,
     System

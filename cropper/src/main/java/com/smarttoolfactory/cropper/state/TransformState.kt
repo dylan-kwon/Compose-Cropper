@@ -119,7 +119,7 @@ open class TransformState(
         snapRotationTo(newRotation)
 
         if (pannable) {
-            val newPan = this.pan + panChange.times(this.zoom)
+            val newPan = this.pan + panChange
             snapPanXto(newPan.x)
             snapPanYto(newPan.y)
         }
